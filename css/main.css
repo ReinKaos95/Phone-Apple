@@ -1,0 +1,17 @@
+*{
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.center{
+text-align: center;
+}
+
+.error{
+color: red;
+}
+
+td{
+	text-align: inline;
+}
