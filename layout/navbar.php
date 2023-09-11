@@ -18,6 +18,9 @@
         <li class="nav-item">
           <a class="nav-link" href="../phone_store/gestion.php">Gestion mobil</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../phone_store/slider.php">Slider</a>
+        </li>
       </ul>
     </div>
   </div>
