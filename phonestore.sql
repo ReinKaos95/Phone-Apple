@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-09-2023 a las 18:55:42
+-- Tiempo de generación: 13-09-2023 a las 21:25:08
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -56,10 +56,24 @@ CREATE TABLE `mobiles` (
   `foto` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `mobiles`
+-- Estructura de tabla para la tabla `rol`
 --
 
+CREATE TABLE `rol` (
+  `id` int(11) NOT NULL,
+  `rol_tipo` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `rol`
+--
+
+INSERT INTO `rol` (`id`, `rol_tipo`) VALUES
+(1, 'Admin'),
+(2, 'Moderador');
 
 -- --------------------------------------------------------
 
@@ -71,6 +85,30 @@ CREATE TABLE `slider` (
   `id` int(11) NOT NULL,
   `imagen` varchar(255) DEFAULT NULL,
   `mobil_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `rol_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `user_roles`
+--
+
+CREATE TABLE `user_roles` (
+  `user_id` int(11) NOT NULL,
+  `rol_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -91,11 +129,32 @@ ALTER TABLE `mobiles`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `rol`
+--
+ALTER TABLE `rol`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `rol_tipo` (`rol_tipo`);
+
+--
 -- Indices de la tabla `slider`
 --
 ALTER TABLE `slider`
   ADD PRIMARY KEY (`id`),
   ADD KEY `mobil_id` (`mobil_id`);
+
+--
+-- Indices de la tabla `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indices de la tabla `user_roles`
+--
+ALTER TABLE `user_roles`
+  ADD KEY `fk_users` (`user_id`),
+  ADD KEY `fk_roles` (`rol_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -114,6 +173,12 @@ ALTER TABLE `mobiles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Restricciones para tablas volcadas
 --
 
@@ -128,6 +193,13 @@ ALTER TABLE `caracteristicas`
 --
 ALTER TABLE `slider`
   ADD CONSTRAINT `slider_ibfk_1` FOREIGN KEY (`mobil_id`) REFERENCES `mobiles` (`id`);
+
+--
+-- Filtros para la tabla `user_roles`
+--
+ALTER TABLE `user_roles`
+  ADD CONSTRAINT `fk_roles` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`id`),
+  ADD CONSTRAINT `fk_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
