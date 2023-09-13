@@ -21,6 +21,9 @@
         <li class="nav-item">
           <a class="nav-link" href="../phone_store/slider.php">Slider</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../phone_store/signup.php">Registrarse</a>
+        </li>
       </ul>
     </div>
   </div>
