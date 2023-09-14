@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 13-09-2023 a las 21:25:08
+-- Tiempo de generación: 14-09-2023 a las 20:02:34
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -96,20 +96,18 @@ CREATE TABLE `slider` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `pswd` varchar(255) NOT NULL,
   `rol_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `user_roles`
+-- Volcado de datos para la tabla `users`
 --
 
-CREATE TABLE `user_roles` (
-  `user_id` int(11) NOT NULL,
-  `rol_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `users` (`id`, `username`, `email`, `pswd`, `rol_id`) VALUES
+(1, 'Akbahara', 'Moeutuus@gmail.net', 'YXNkZmc=', 1),
+(2, 'Moeutuus', 'gameplayspitudos@gmail.com', 'MTIzNDU2', 2);
 
 --
 -- Índices para tablas volcadas
@@ -147,14 +145,8 @@ ALTER TABLE `slider`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
-
---
--- Indices de la tabla `user_roles`
---
-ALTER TABLE `user_roles`
-  ADD KEY `fk_users` (`user_id`),
-  ADD KEY `fk_roles` (`rol_id`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `fk_rolid` (`rol_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -176,7 +168,7 @@ ALTER TABLE `mobiles`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -195,11 +187,10 @@ ALTER TABLE `slider`
   ADD CONSTRAINT `slider_ibfk_1` FOREIGN KEY (`mobil_id`) REFERENCES `mobiles` (`id`);
 
 --
--- Filtros para la tabla `user_roles`
+-- Filtros para la tabla `users`
 --
-ALTER TABLE `user_roles`
-  ADD CONSTRAINT `fk_roles` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`id`),
-  ADD CONSTRAINT `fk_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `users`
+  ADD CONSTRAINT `fk_rolid` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

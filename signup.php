@@ -9,21 +9,26 @@
   $result = mysqli_query($conn, $sql);
 ?>
 
+
 <div class="container">
   <form method="post" action="">
     <label>Usuario</label>
-    <input type="text" name="username">
+    <input type="text" name="username" required>
+    <br>
+    <label>Correo</label>
+    <input type="email" name="email" required>
     <br>
     <label>Contraseña</label>
-    <input type="password" name="password">
+    <input type="password" name="password" required>
     <br>
     <br>
     <label>Rol</label>
-    <select>
-     <?php
+    <select name="rol">
+      <option value="#">Seleccione un rol</option>
+           <?php
        while ($key = mysqli_fetch_assoc($result)) {
       ?>
-    	<option name="rol" value="<?php echo $key["id"] ?>"><?php echo $key["rol_tipo"] ?></option>
+      <option name="rol" value="<?php echo $key["id"] ?>"><?php echo $key["rol_tipo"] ?></option>
     <?php } ?>
     </select>
     <br>
@@ -35,22 +40,27 @@
 include 'config/db.php';
 if (isset($_POST['submit'])) {
   $username = $_POST['username'];
+  $email = $_POST['email'];
   $password = base64_encode($_POST['password']);
   $rol=$_POST['rol'];
 
- 
-  echo $username . '<br>';
-  echo $password . '<br>';
-  echo $rol;
+  $validate = $conn->query("SELECT * FROM users WHERE email = '$email'");
+  $count = mysqli_num_rows($validate);
 
-  /*$sql = "INSERT INTO mobiles (nombre, modelo, foto) VALUES ('$nombre', '$marca', '$destino') ";
-  if (mysqli_query($conn, $sql)) {
-    header("Location: index.php");
+  if ($count > 0) {
+    echo "usuario actualmente existe";
+  }
+
+  else{
+      $sql = $conn->query("INSERT INTO users (username, email, pswd, rol_id) VALUES ('$username', '$email', '$password', '$rol')");
+  if ($sql) {
+    echo "Creacion exitosa, ya se puede <a href='login.php'>registrar</a> ";
   }else{
     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-  }*/
-
+    }
+  }
 
 }
+
 
  ?>
