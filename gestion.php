@@ -10,7 +10,7 @@
 ?>
 
 
-  <table class="table">
+  <table class="display" style="width:100%" id="tabla">
 
             <thead>
                 <tr>
@@ -27,16 +27,25 @@
                  ?>
                     <tr>
                         <td><?php echo $key["id"] ?></td>
-                        <td><img src="<?php echo $key["foto"] ?>"  width="150" height="300"></td>
+                        <td><img src="<?php echo $key["foto"] ?>"  width="200" height="200"></td>
                         <td><?php echo $key["nombre"] ?></td>
                         <td><?php echo $key["modelo"] ?></td>
                         <td>
                             <a href="edit.php?id=<?php echo $key["id"] ?>">Editar</a>
-                        </td>
-                        <td>
+                            &nbsp;
                             <a href="delete.php?id=<?php echo $key["id"] ?>">Eliminar</a>
                         </td>
                     </tr>
                 <?php } ?>
             </tbody>
         </table>
+
+<script>
+    
+    var tabla = document.querySelector("#tabla");
+
+    var dataTable = new DataTable(tabla, {
+        perPage:3,
+        perPageSelect:[3,6,9,12]
+    });
+</script>
